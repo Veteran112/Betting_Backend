@@ -1,0 +1,46 @@
+{
+  "name": "arbitragebettingbackend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "start": "node server.js",
+    "db:migrate": "node models/sync.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Veteran112/Betting_Backend.git"
+  },
+  "author": "wiley",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Veteran112/Betting_Backend/issues"
+  },
+  "homepage": "https://github.com/Veteran112/Betting_Backend#readme",
+  "dependencies": {
+    "colors": "^1.4.0",
+    "config": "^3.3.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.17.1",
+    "express-fileupload": "^1.2.1",
+    "htmlspecialchars": "^1.0.5",
+    "ipfs-api": "^26.1.2",
+    "joi": "^17.4.2",
+    "joi-objectid": "^4.0.2",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.1",
+    "mongoose": "^5.12.7",
+    "multer": "^1.4.2",
+    "mysql2": "^2.3.2",
+    "node-cron": "^3.0.0",
+    "pg": "^8.7.1",
+    "pg-hstore": "^2.3.4",
+    "pm2": "^5.1.2",
+    "sequelize": "^6.7.0",
+    "swagger-jsdoc": "^6.1.0",
+    "swagger-ui-express": "^4.1.6",
+    "web3": "^1.4.0"
+  }
+}
