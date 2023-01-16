@@ -92,7 +92,6 @@ module.exports = {
 				tags: [ "Users" ],
 				summary: "Get current user settings",
 				description: "Method for getting current user info (all settings)",
-				security: [{Bearer: []}],
  				responses: {
 					200: {description: "Success. Gives out `user` and `stats`"},
 					404: {description: "Failed! User not found"},
