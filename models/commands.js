@@ -15,7 +15,7 @@ module.exports = (sequelize) => {
         allowNull: false
       },
       step: {
-        type: DataTypes.STRING
+        type: DataTypes.INTEGER
       },
       command: {
         type: DataTypes.STRING,
@@ -27,7 +27,7 @@ module.exports = (sequelize) => {
       date_create: {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW
-      },
+      }
     },
     {
       timestamps: false,
@@ -39,5 +39,4 @@ module.exports = (sequelize) => {
       updatedAt: false
     }
   );
-  
 };

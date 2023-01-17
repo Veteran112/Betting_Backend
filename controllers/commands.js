@@ -1,7 +1,4 @@
-
-const {
-  Commands
-} = require("../models/sequelizer");
+const { Commands } = require("../models/sequelizer");
 
 const Controller = {
   async getOneProvider(req, res) {
@@ -15,8 +12,9 @@ const Controller = {
       };
 
       var commands = await Commands.findAll({ where });
-      
-      if (!commands) return res.status(404).send({ error: "Command not found" });
+
+      if (!commands)
+        return res.status(404).send({ error: "Command not found" });
 
       res.send({ commands });
     } catch (error) {
@@ -24,21 +22,23 @@ const Controller = {
     }
   },
   async createCommand(req, res) {
-		try {
-			var { provider_id, step, command } = req.body;
+    try {
+      var { provider_id, step, command } = req.body;
 
-			if (!provider_id || !step || !command)
-				return res.status(422).send({error: "Not all fields has filled"});
-      
-			var command = await Commands.create({
-				provider_id, step, command, screen: ''
-			});
+      if (!provider_id || !step || !command)
+        return res.status(422).send({ error: "Not all fields has filled" });
+
+      var command = await Commands.create({
+        provider_id,
+        step,
+        command,
+        screen: ""
+      });
       res.send({ message: "Created Command" });
-		}
-		catch(error) {
-			res.status(500).send({error: "Server error"});
-		}
-	},
+    } catch (error) {
+      res.status(500).send({ error: "Server error" });
+    }
+  },
 
   async updateCommand(req, res) {
     try {
@@ -67,12 +67,12 @@ const Controller = {
       res.status(500).send({ error: "Server error" });
     }
   },
-  
+
   async deleteCommand(req, res) {
     try {
       var _id = req.params.id;
 
-      var command = await Command.findOne({
+      var command = await Commands.findOne({
         where: { _id }
       });
       if (!command) return res.status(404).send({ error: "Command not found" });
@@ -85,7 +85,7 @@ const Controller = {
     } catch (error) {
       res.status(500).send({ error: "Server error" });
     }
-  },
+  }
 };
 
 module.exports = Controller;

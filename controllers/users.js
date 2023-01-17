@@ -1,8 +1,6 @@
 const { Op, Sequelize } = require("sequelize");
 const crypto = require("crypto");
-const {
-  Users
-} = require("../models/sequelizer");
+const { Users } = require("../models/sequelizer");
 const helpers = require("../helpers");
 const axios = require("axios");
 
@@ -58,8 +56,11 @@ const Controller = {
         _id: user_id
       };
 
-      var user = await Users.findOne({ where, attributes: {exclude: ['password']} });
-      
+      var user = await Users.findOne({
+        where,
+        attributes: { exclude: ["password"] }
+      });
+
       if (!user) return res.status(404).send({ error: "User not found" });
 
       res.send({ user });
@@ -68,34 +69,45 @@ const Controller = {
     }
   },
   async createUser(req, res) {
-		try {
-			var { fname, lname, email, password } = req.body;
+    try {
+      var { fname, lname, email, password } = req.body;
 
-			if (!email || !fname || !lname || !password)
-				return res.status(422).send({error: "Not all fields has filled"});
+      if (!email || !fname || !lname || !password)
+        return res.status(422).send({ error: "Not all fields has filled" });
 
-			password = crypto.createHmac("sha256", process.env.PASSWORD_HASH).update(password).digest("hex");
+      password = crypto
+        .createHmac("sha256", process.env.PASSWORD_HASH)
+        .update(password)
+        .digest("hex");
 
-			var user_exist = await Users.count({
-				where: {
-					email
-				}
-			});
-			if (user_exist && user_exist > 0) return res.status(404).send({error: "User already exist"});
-			let block = false;
-			var user = await Users.create({
-				fname, lname, email, password, block
-			});
-      var users = await Users.findAll({attributes: {exclude: ['password']}});
+      var user_exist = await Users.count({
+        where: {
+          email
+        }
+      });
+      if (user_exist && user_exist > 0)
+        return res.status(404).send({ error: "User already exist" });
+      let block = false;
+      var user = await Users.create({
+        fname,
+        lname,
+        email,
+        password,
+        block
+      });
+      var users = await Users.findAll({
+        attributes: { exclude: ["password"] }
+      });
       res.send(users);
-		}
-		catch(error) {
-			res.status(500).send({error: "Server error"});
-		}
-	},
+    } catch (error) {
+      res.status(500).send({ error: "Server error" });
+    }
+  },
   async getList(req, res) {
     try {
-      var users = await Users.findAll({attributes: {exclude: ['password']}});
+      var users = await Users.findAll({
+        attributes: { exclude: ["password"] }
+      });
       res.send(users);
     } catch (error) {
       res.status(500).send({ error: "Server error" });
@@ -110,7 +122,11 @@ const Controller = {
       if (fname !== undefined) set.fname = fname;
       if (lname !== undefined) set.lname = lname;
       if (email !== undefined) set.email = email;
-      if (password !== undefined) set.password = crypto.createHmac("sha256", process.env.PASSWORD_HASH).update(password).digest("hex");
+      if (password !== undefined)
+        set.password = crypto
+          .createHmac("sha256", process.env.PASSWORD_HASH)
+          .update(password)
+          .digest("hex");
 
       var update = await Users.update(set, {
         where: {
@@ -127,12 +143,11 @@ const Controller = {
   },
   async blockUser(req, res) {
     try {
-      var _id = req.params.id;
-      var action = req.params.action;
+      var { id, action } = req.body;
       await Users.update(
         { block: action },
         {
-          where: { _id }
+          where: { _id: id }
         }
       );
       res.status(200).send({ success: true });
