@@ -67,7 +67,32 @@ const Controller = {
       res.status(500).send({ error: "Server error" });
     }
   },
+  async createUser(req, res) {
+		try {
+			var { fname, lname, email, password } = req.body;
 
+			if (!email || !fname || !lname || !password)
+				return res.status(422).send({error: "Not all fields has filled"});
+
+			password = crypto.createHmac("sha256", process.env.PASSWORD_HASH).update(password).digest("hex");
+
+			var user_exist = await Users.count({
+				where: {
+					email
+				}
+			});
+			if (user_exist && user_exist > 0) return res.status(404).send({error: "User already exist"});
+			let block = false;
+			var user = await Users.create({
+				fname, lname, email, password, block
+			});
+      var users = await Users.findAll({attributes: {exclude: ['password']}});
+      res.send(users);
+		}
+		catch(error) {
+			res.status(500).send({error: "Server error"});
+		}
+	},
   async getList(req, res) {
     try {
       var users = await Users.findAll({attributes: {exclude: ['password']}});
@@ -78,6 +103,7 @@ const Controller = {
   },
   async updateUserSettings(req, res) {
     try {
+      var _id = req.params.id;
       var { fname, lname, email, password } = req.body;
       var set = {};
 
@@ -88,7 +114,7 @@ const Controller = {
 
       var update = await Users.update(set, {
         where: {
-          _id: req.user.id
+          _id
         }
       });
       if (!update || update === [0])

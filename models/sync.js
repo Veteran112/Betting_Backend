@@ -2,6 +2,8 @@ const { Sequelize } = require("sequelize");
 require('dotenv').config();
 const mysql2 = require("mysql2");
 const users = require("./users");
+const providers = require("./providers");
+const commands = require("./commands");
 
 const sequelize = new Sequelize({
   username: process.env.USERNAME,
@@ -22,6 +24,8 @@ const sequelize = new Sequelize({
 });
 
 users(sequelize);
+providers(sequelize);
+commands(sequelize);
 
 sequelize
   .sync({
