@@ -411,7 +411,7 @@ module.exports = {
 				}]
 			}
 		},
-		"/api/providers/create": {
+		"/api/commands/create": {
 			post: {
 				tags: [ "Commands" ],
 				summary: "Create new command",

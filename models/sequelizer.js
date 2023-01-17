@@ -34,7 +34,7 @@ Providers.belongsTo(Users, {
 Commands.belongsTo(Providers, {
   targetKey: "_id",
   foreignKey: "provider_id",
-  as: "command"
+  as: "event"
 });
 Users.hasMany(Providers, {
   sourceKey: "_id",
