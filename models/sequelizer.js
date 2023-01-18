@@ -4,6 +4,7 @@ const mysql2 = require("mysql2");
 const users = require("./users");
 const providers = require("./providers");
 const commands = require("./commands");
+const histories = require("./history");
 const sequelize = new Sequelize({
   username: process.env.USERNAME,
   password: process.env.PASSWORD,
@@ -25,6 +26,7 @@ const sequelize = new Sequelize({
 const Users = users(sequelize);
 const Providers = providers(sequelize);
 const Commands = commands(sequelize);
+const Histories = histories(sequelize);
 
 Providers.belongsTo(Users, {
   targetKey: "_id",
@@ -51,5 +53,6 @@ module.exports = {
   sequelize,
   Users,
   Providers,
-  Commands
+  Commands,
+  Histories
 };

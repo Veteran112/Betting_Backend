@@ -4,6 +4,7 @@ const mysql2 = require("mysql2");
 const users = require("./users");
 const providers = require("./providers");
 const commands = require("./commands");
+const histories = require("./history");
 
 const sequelize = new Sequelize({
   username: process.env.USERNAME,
@@ -26,6 +27,7 @@ const sequelize = new Sequelize({
 users(sequelize);
 providers(sequelize);
 commands(sequelize);
+histories(sequelize);
 
 sequelize
   .sync({
