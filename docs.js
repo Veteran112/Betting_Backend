@@ -25,7 +25,8 @@ module.exports = {
     { name: "Auth" },
     { name: "Users" },
     { name: "Providers" },
-    { name: "History" }
+    { name: "History" },
+    { name: "Bets" }
   ],
   paths: {
     "/api/auth/signin": {
@@ -494,7 +495,19 @@ module.exports = {
         tags: ["History"],
         summary: "Get historical transactions",
         description: "Method for getting historical transactions",
-        // security: [{ Bearer: [] }],
+        security: [{ Bearer: [] }],
+        responses: {
+          200: { description: "Success. Gives out" },
+          500: { description: "Failed! Unexpected server error" }
+        }
+      }
+    },
+    "/api/bets": {
+      get: {
+        tags: ["Bets"],
+        summary: "Get bets list",
+        description: "Method for getting bets list",
+        security: [{ Bearer: [] }],
         responses: {
           200: { description: "Success. Gives out" },
           500: { description: "Failed! Unexpected server error" }
