@@ -20,7 +20,7 @@ const Controller = {
         where: {
           email,
           password
-        }
+        },attributes: { exclude: ["password"] }
       });
       if (!user)
         return res
