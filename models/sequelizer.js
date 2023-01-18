@@ -1,10 +1,11 @@
 const { DataTypes, Sequelize } = require("sequelize");
-require('dotenv').config();
+require("dotenv").config();
 const mysql2 = require("mysql2");
 const users = require("./users");
 const providers = require("./providers");
 const commands = require("./commands");
 const histories = require("./history");
+const bets = require("./bets");
 const sequelize = new Sequelize({
   username: process.env.USERNAME,
   password: process.env.PASSWORD,
@@ -27,6 +28,7 @@ const Users = users(sequelize);
 const Providers = providers(sequelize);
 const Commands = commands(sequelize);
 const Histories = histories(sequelize);
+const Bets = bets(sequelize);
 
 Providers.belongsTo(Users, {
   targetKey: "_id",
@@ -54,5 +56,6 @@ module.exports = {
   Users,
   Providers,
   Commands,
-  Histories
+  Histories,
+  Bets
 };
