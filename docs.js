@@ -490,7 +490,7 @@ module.exports = {
         }
       }
     },
-    "/api/history": {
+    "/api/history/{id}": {
       get: {
         tags: ["History"],
         summary: "Get historical transactions",
@@ -499,7 +499,16 @@ module.exports = {
         responses: {
           200: { description: "Success. Gives out" },
           500: { description: "Failed! Unexpected server error" }
-        }
+        },
+        parameters: [
+          {
+            name: "user_id",
+            in: "path",
+            type: "string",
+            description: "UserId",
+            required: true
+          }
+        ]
       }
     },
     "/api/bets": {
@@ -512,6 +521,26 @@ module.exports = {
           200: { description: "Success. Gives out" },
           500: { description: "Failed! Unexpected server error" }
         }
+      }
+    },
+    "/api/bets/{id}": {
+      get: {
+        tags: ["Bets"],
+        summary: "Get one bet info",
+        description: "Method for getting info about one bet",
+        security: [{ Bearer: [] }],
+        responses: {
+          200: { description: "Success. Gives out" },
+          500: { description: "Failed! Unexpected server error" }
+        },
+        parameters: [
+          {
+            name: "id",
+            in: "path",
+            type: "string",
+            required: true
+          }
+        ]
       }
     }
   }
