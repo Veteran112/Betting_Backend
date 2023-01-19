@@ -10,6 +10,10 @@ module.exports = (sequelize) => {
         primaryKey: true,
         defaultValue: v4
       },
+      user_id: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
       date_create: {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW
