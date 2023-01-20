@@ -70,7 +70,8 @@ const Controller = {
   },
   async createUser(req, res) {
     try {
-      var { fname, lname, email, password } = req.body;
+      var { fname, lname, email, password, admin_id } = req.body;
+      console.log(req.body);
 
       if (!email || !fname || !lname || !password)
         return res.status(422).send({ error: "Not all fields has filled" });
@@ -82,18 +83,22 @@ const Controller = {
 
       var user_exist = await Users.count({
         where: {
-          email
+          email,
+          user_type: "admin"
         }
       });
       if (user_exist && user_exist > 0)
         return res.status(404).send({ error: "User already exist" });
       let block = false;
+      let user_type = "user";
       var user = await Users.create({
         fname,
         lname,
         email,
         password,
-        block
+        block,
+        user_type,
+        admin_id
       });
       var users = await Users.findAll({
         attributes: { exclude: ["password"] }
@@ -105,7 +110,14 @@ const Controller = {
   },
   async getList(req, res) {
     try {
+      var admin_id = req.params.id;
+      var where = {};
+      where = {
+        [Op.or]: [{ _id: admin_id }, { admin_id }]
+      };
+
       var users = await Users.findAll({
+        where,
         attributes: { exclude: ["password"] }
       });
       res.send(users);

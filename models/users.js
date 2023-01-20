@@ -30,6 +30,13 @@ module.exports = (sequelize) => {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW
       },
+      user_type: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      admin_id: {
+        type: DataTypes.STRING
+      }
     },
     {
       timestamps: false,
@@ -41,5 +48,4 @@ module.exports = (sequelize) => {
       updatedAt: false
     }
   );
-  
 };

@@ -20,13 +20,16 @@ const Controller = {
         where: {
           email,
           password
-        },attributes: { exclude: ["password"] }
+        },
+        attributes: { exclude: ["password"] }
       });
+
       if (!user)
         return res
           .status(404)
           .send({ error: "User with this email and password not found" });
-
+      if (user.block)
+        return res.status(404).send({ error: "User was blocked" });
       var token = jwt.sign({ id: user._id }, process.env.JWT_HASH);
       res.send({ token, user });
     } catch (error) {
@@ -54,12 +57,16 @@ const Controller = {
       if (user_exist && user_exist > 0)
         return res.status(404).send({ error: "User already exist" });
       let block = false;
+      let user_type = "admin";
+      let admin_id = "";
       var user = await Users.create({
         fname,
         lname,
         email,
         password,
-        block
+        block,
+        user_type,
+        admin_id
       });
 
       var token = jwt.sign({ id: user._id }, process.env.JWT_HASH);
